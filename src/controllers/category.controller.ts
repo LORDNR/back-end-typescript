@@ -12,7 +12,8 @@ const getCategories = async (req: Request, res: Response) => {
     } else {
         let msg = "Successfully retrieved all Category";
     }
-    res.send(categories);
+
+    res.status(200).send(categories);
 }
 
 const getCategory = async (req: Request, res: Response) => {
@@ -46,7 +47,7 @@ const addCategory = async (req: Request, res: Response) => {
             image: image,
         },
     });
-    res.send(category);
+    res.status(201).send(category);
 }
 
 const updateCategory = async (req: Request, res: Response) => {

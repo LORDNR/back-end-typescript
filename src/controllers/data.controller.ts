@@ -62,7 +62,7 @@ const deleteData = async (req: Request, res: Response) => {
             id: id
         }
     })
-    res.sendStatus(200)
+    res.sendStatus(204)
 }
 
 export { getData, getOneData, addData, updateData, deleteData }
