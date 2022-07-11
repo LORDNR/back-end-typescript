@@ -3,6 +3,33 @@ import { hashSync } from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import prisma from '../db/prisma.db'
 
+const listAll = async (req: Request, res: Response) => {
+    const users = await prisma.users.findMany({
+        select: {
+            username: true,
+            userlevel: true
+        }
+
+    })
+
+    res.status(200).send(users);
+}
+
+const getOneById = async (req: Request, res: Response) => {
+    const id = Number(req.params.id);
+    const user = await prisma.users.findUnique({
+        where: {
+            id: id
+        },
+        select: {
+            username: true,
+            userlevel: true
+        }
+
+    })
+
+    res.status(200).send(user);
+}
 
 const register = async (req: Request, res: Response) => {
     const user = await prisma.users.create({
@@ -22,26 +49,22 @@ const register = async (req: Request, res: Response) => {
     });
 }
 
-const login = async (req: Request, res: Response) => {
-    const user = await prisma.users.findFirst({
+const updateUser = async (req: Request, res: Response) => {
+    const id = Number(req.params.id)
+
+    const { password, userlevel } = req.body
+    const user = await prisma.users.update({
         where: {
-            username: {
-                equals: req.body.username,
-            },
+            id: id
         },
-    });
+        data: {
+            password: hashSync(password, 10),
+            userlevel: userlevel,
 
-    const payload = {
-        username: user!.username,
-        id: user!.id,
-    };
+        }
+    })
 
-    const token = await jwt.sign(payload, "Random String", { expiresIn: "1d" });
+    res.send(user)
+}
 
-    return res.status(200).send({
-        success: true,
-        message: "Logged in successfully.",
-        token: "Bearer " + token,
-    });
-};
-export { register, login }
+export { listAll, getOneById, register, updateUser }
