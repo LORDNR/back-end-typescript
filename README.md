@@ -2,7 +2,7 @@
 
 create file .env 
 ### .env
-PORT = write your Port
+PORT = Write your port
 
 DATABASE_URL="mysql://USER:PASSWORD@HOST:PORT/DATABASE"
 
@@ -16,3 +16,5 @@ DATABASE_URL="mysql://root:@localhost:3306/yourDB"
 > pnpm install
 
 > pnpm prisma migrate dev --name init
+
+> pnpm dev
