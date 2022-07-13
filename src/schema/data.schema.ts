@@ -1,35 +1,31 @@
 import { checkSchema } from 'express-validator'
 
-export const getCategorySchema = checkSchema({
+const getOneDataSchema = checkSchema({
     id: {
         in: 'params',
         isInt: true,
-
-        toInt: true,
+        toInt: true
     }
 })
 
-export const addCategorySchema = checkSchema({
+const addDataSchema = checkSchema({
     name: {
         in: 'body',
         isString: true,
-
         notEmpty: true
     },
     image: {
         in: 'body',
         isString: true,
-
-
+        notEmpty: true
     }
 })
 
-export const updateCategorySchema = checkSchema({
+const updateDataSchema = checkSchema({
     id: {
         in: 'params',
         isInt: true,
-
-        toInt: true,
+        toInt: true
     },
     name: {
         in: 'body',
@@ -43,7 +39,7 @@ export const updateCategorySchema = checkSchema({
     }
 })
 
-export const deleteCategorySchema = checkSchema({
+const deleteDataSchema = checkSchema({
     id: {
         in: 'params',
         isInt: true,
@@ -54,6 +50,4 @@ export const deleteCategorySchema = checkSchema({
 
 
 
-
-
-
+export { getOneDataSchema, addDataSchema, updateDataSchema, deleteDataSchema }

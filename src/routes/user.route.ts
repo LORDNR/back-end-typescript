@@ -1,13 +1,13 @@
 import { Router } from "express";
-import { listAll, getOneById, register, updateUser } from '../controllers/user.controller'
-
+import { listAll, getOneById, register } from '../controllers/user.controller'
+import { getOneByIdSchema, registerSchema } from '../schema/user.schema'
 export const userRouter = Router()
 
 userRouter.get('/', listAll)
-userRouter.get('/:id', getOneById)
-userRouter.post('/', register)
+userRouter.get('/:id', getOneByIdSchema, getOneById)
+userRouter.post('/', registerSchema, register)
 // userRouter.post('/login', login)
-userRouter.put('/:id', updateUser)
+// userRouter.put('/:id', updateUser)
 
 
 

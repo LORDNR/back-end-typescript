@@ -2,6 +2,7 @@ import Express, { Request, Response } from "express";
 import { hashSync } from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import prisma from '../db/prisma.db'
+import { validationResult } from "express-validator";
 
 const listAll = async (req: Request, res: Response) => {
     const users = await prisma.users.findMany({
@@ -16,6 +17,11 @@ const listAll = async (req: Request, res: Response) => {
 }
 
 const getOneById = async (req: Request, res: Response) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
     const id = Number(req.params.id);
     const user = await prisma.users.findUnique({
         where: {
@@ -32,6 +38,11 @@ const getOneById = async (req: Request, res: Response) => {
 }
 
 const register = async (req: Request, res: Response) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
     const user = await prisma.users.create({
         data: {
             username: req.body.username,
@@ -49,22 +60,22 @@ const register = async (req: Request, res: Response) => {
     });
 }
 
-const updateUser = async (req: Request, res: Response) => {
-    const id = Number(req.params.id)
+// const updateUser = async (req: Request, res: Response) => {
+//     const id = Number(req.params.id)
 
-    const { password, userlevel } = req.body
-    const user = await prisma.users.update({
-        where: {
-            id: id
-        },
-        data: {
-            password: hashSync(password, 10),
-            userlevel: userlevel,
+//     const { password, userlevel } = req.body
+//     const user = await prisma.users.update({
+//         where: {
+//             id: id
+//         },
+//         data: {
+//             password: hashSync(password, 10),
+//             userlevel: userlevel,
 
-        }
-    })
+//         }
+//     })
 
-    res.send(user)
-}
+//     res.send(user)
+// }
 
-export { listAll, getOneById, register, updateUser }
+export { listAll, getOneById, register }

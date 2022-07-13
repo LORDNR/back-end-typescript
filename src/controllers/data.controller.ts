@@ -1,4 +1,5 @@
 import { Express, Request, Response } from "express"
+import { validationResult } from "express-validator";
 import prisma from '../db/prisma.db'
 
 
@@ -15,7 +16,10 @@ const getData = async (req: Request, res: Response) => {
 }
 
 const getOneData = async (req: Request, res: Response) => {
-
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
     const id = Number(req.params.id);
     const data = await prisma.data.findUnique({
         where: {
@@ -26,6 +30,11 @@ const getOneData = async (req: Request, res: Response) => {
 }
 
 const addData = async (req: Request, res: Response) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
     const { name, detail, image } = req.body;
     const data = await prisma.data.create({
         data: {
@@ -39,6 +48,11 @@ const addData = async (req: Request, res: Response) => {
 }
 
 const updateData = async (req: Request, res: Response) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
     const id = Number(req.params.id)
     const { name, detail, image } = req.body
     const data = await prisma.data.update({
@@ -56,6 +70,11 @@ const updateData = async (req: Request, res: Response) => {
 }
 
 const deleteData = async (req: Request, res: Response) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
     const id = Number(req.params.id)
     const data = await prisma.data.delete({
         where: {
