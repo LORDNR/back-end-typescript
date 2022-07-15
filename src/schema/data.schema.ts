@@ -14,11 +14,7 @@ const addDataSchema = checkSchema({
         isString: true,
         notEmpty: true
     },
-    image: {
-        in: 'body',
-        isString: true,
-        notEmpty: true
-    }
+
 })
 
 const updateDataSchema = checkSchema({

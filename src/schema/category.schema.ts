@@ -16,12 +16,6 @@ export const addCategorySchema = checkSchema({
 
         notEmpty: true
     },
-    image: {
-        in: 'body',
-        isString: true,
-
-
-    }
 })
 
 export const updateCategorySchema = checkSchema({
