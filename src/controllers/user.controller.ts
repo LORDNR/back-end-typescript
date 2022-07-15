@@ -1,5 +1,5 @@
 import Express, { Request, Response } from "express";
-import { hashSync } from 'bcrypt'
+import { hashSync } from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import prisma from '../db/prisma.db'
 import { validationResult } from "express-validator";
