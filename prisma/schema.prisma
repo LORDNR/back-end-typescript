@@ -18,18 +18,29 @@ model category {
   data  data[]
 
 
-  @@unique([id], name: "Data")
+  @@unique([id], name: "Category")
 }
 
 model data {
-  id       Int       @id @default(autoincrement())
-  name     String?
-  detail   String?
-  image    String?   @db.Text
-  cgId     Int       @db.Int
+  id     Int     @id @default(autoincrement())
+  name   String?
+  detail String?
+  image  String? @db.Text
+  cgId   Int     @db.Int
+  areaId Int?
+
   category category? @relation(fields: [cgId], references: [id])
+  area     area?     @relation(fields: [areaId], references: [id])
 
   @@index([cgId], name: "type")
+}
+
+model area {
+  id   Int     @id @default(autoincrement())
+  name String?
+  data data[]
+
+  @@unique([id], name: "area")
 }
 
 model users {

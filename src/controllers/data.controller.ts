@@ -29,9 +29,9 @@ const getData = async (req: Request, res: Response) => {
     })
 
     if (data.length == 0) {
-        let msg = "have not food";
+        let msg = "have not data";
     } else {
-        let msg = "Successfully retrieved all Category";
+        let msg = "Successfully retrieved all data";
     }
 
     res.send(data)
@@ -45,9 +45,28 @@ const getDataByCgId = async (req: Request, res: Response) => {
     })
 
     if (data.length == 0) {
-        let msg = "have not food";
+        let msg = "have not data";
     } else {
-        let msg = "Successfully retrieved all Category";
+        let msg = "Successfully retrieved all data";
+    }
+
+    res.send(data)
+}
+
+const getDataByAreaId = async (req: Request, res: Response) => {
+    const cgId = Number(req.params.cgId)
+    const areaId = Number(req.params.areaId)
+    const data = await prisma.data.findMany({
+        where: {
+            cgId: cgId,
+            areaId: areaId
+        }
+    })
+
+    if (data.length == 0) {
+        let msg = "have not data";
+    } else {
+        let msg = "Successfully retrieved all data";
     }
 
     res.send(data)
@@ -78,7 +97,6 @@ const addData = async (req: Request, res: Response) => {
     const fileName = Date.now() + "." + imageFile?.originalname.split(".").pop()
 
     const file = bucket.file(fileName)
-    // bucket.upload('', {})
 
     const stream = file.createWriteStream({
         metadata: {
@@ -93,13 +111,15 @@ const addData = async (req: Request, res: Response) => {
         expires: time
     })
 
-    const { name, detail, image, cgId } = req.body;
+    const { name, detail, image, cgId, areaId } = req.body;
     const data = await prisma.data.create({
         data: {
             name: name,
             detail: detail,
             image: url[0],
-            cgId: Number(cgId)
+            cgId: Number(cgId),
+            areaId: Number(areaId)
+
         }
     })
 
@@ -143,4 +163,4 @@ const deleteData = async (req: Request, res: Response) => {
     res.sendStatus(204)
 }
 
-export { getData, getDataByCgId, getOneData, addData, updateData, deleteData }
+export { getData, getDataByCgId, getDataByAreaId, getOneData, addData, updateData, deleteData }
