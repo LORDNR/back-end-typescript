@@ -24,7 +24,25 @@ const bucket = admin.storage().bucket()
 
 
 const getData = async (req: Request, res: Response) => {
-    const data = await prisma.data.findMany()
+    const data = await prisma.data.findMany({
+
+    })
+
+    if (data.length == 0) {
+        let msg = "have not food";
+    } else {
+        let msg = "Successfully retrieved all Category";
+    }
+
+    res.send(data)
+}
+const getDataByCgId = async (req: Request, res: Response) => {
+    const cgId = Number(req.params.cgId)
+    const data = await prisma.data.findMany({
+        where: {
+            cgId: cgId
+        }
+    })
 
     if (data.length == 0) {
         let msg = "have not food";
@@ -75,12 +93,13 @@ const addData = async (req: Request, res: Response) => {
         expires: time
     })
 
-    const { name, detail, image } = req.body;
+    const { name, detail, image, cgId } = req.body;
     const data = await prisma.data.create({
         data: {
             name: name,
             detail: detail,
-            image: url[0]
+            image: url[0],
+            cgId: Number(cgId)
         }
     })
 
@@ -124,4 +143,4 @@ const deleteData = async (req: Request, res: Response) => {
     res.sendStatus(204)
 }
 
-export { getData, getOneData, addData, updateData, deleteData }
+export { getData, getDataByCgId, getOneData, addData, updateData, deleteData }
