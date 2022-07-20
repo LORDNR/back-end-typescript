@@ -5,6 +5,7 @@ import prisma from '../db/prisma.db'
 import admin from 'firebase-admin'
 
 //firebase
+
 const serviceAccount = require("../config/firebase-key.json");
 const BUCKET = "project-icm.appspot.com"
 
