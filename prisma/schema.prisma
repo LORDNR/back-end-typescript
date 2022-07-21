@@ -6,9 +6,9 @@ generator client {
 }
 
 datasource db {
-  provider          = "mysql"
-  url               = env("DATABASE_URL")
-  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+  // shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 model category {
@@ -16,7 +16,6 @@ model category {
   name  String?
   image String? @db.Text
   data  data[]
-
 
   @@unique([id], name: "Category")
 }
