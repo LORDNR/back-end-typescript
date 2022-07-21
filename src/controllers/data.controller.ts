@@ -89,7 +89,7 @@ const addData = async (req: Request, res: Response) => {
         }
     })
 
-    res.status(200).send(data)
+    res.status(201).send(data)
 }
 
 const updateData = async (req: Request, res: Response) => {
@@ -97,9 +97,11 @@ const updateData = async (req: Request, res: Response) => {
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     }
+    const file = req.file
+    const image = await uploadImage(file)
 
     const id = Number(req.params.id)
-    const { name, detail, image } = req.body
+    const { name, detail } = req.body
     const data = await prisma.data.update({
         where: {
             id: id

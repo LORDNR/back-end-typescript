@@ -64,8 +64,10 @@ const updateCategory = async (req: Request, res: Response) => {
         return res.status(400).json({ errors: errors.array() });
     }
 
+    const file = req.file
+    const image = await uploadImage(file)
 
-    const { name, image } = req.body;
+    const { name } = req.body;
     const id = Number(req.params.id);
     const category = await prisma.category.update({
         where: { id: id },
