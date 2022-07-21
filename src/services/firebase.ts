@@ -1,7 +1,10 @@
-import e, { Express, Request, Response } from 'express';
 import admin from 'firebase-admin'
 
-const serviceAccount = require("../config/firebase-key.json");
+import jsonObject from "../config/firebase-key.json"
+
+// const serviceAccount = require("../config/firebase-key.json");
+const serviceAccount: object = jsonObject;
+
 
 const BUCKET = "project-icm.appspot.com"
 admin.initializeApp({
