@@ -2,22 +2,8 @@ import Express, { Request, Response } from 'express'
 import { validationResult } from 'express-validator';
 
 import prisma from '../db/prisma.db'
-// import uploadImage from '../services/firebase'
 
-import admin from 'firebase-admin'
-
-//firebase
-const serviceAccount = require("../config/firebase-key.json");
-const BUCKET = "project-icm.appspot.com"
-
-admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-
-    storageBucket: BUCKET
-});
-
-const bucket = admin.storage().bucket()
-
+import uploadImage from '../services/firebase'
 
 
 
@@ -58,33 +44,14 @@ const addCategory = async (req: Request, res: Response) => {
     }
 
 
-
-    const { name, image } = req.body;
-
-    const imageFile = req.file
-    const fileName = Date.now() + "." + imageFile?.originalname.split(".").pop()
-
-    const file = bucket.file(fileName)
-    // bucket.upload('', {})
-
-    const stream = file.createWriteStream({
-        metadata: {
-            contentType: imageFile?.mimetype,
-        }
-    })
-
-    stream.end(imageFile?.buffer)
-    const time = new Date().setDate(new Date().getFullYear() + 50)
-    const url = await file.getSignedUrl({
-        action: "read",
-        expires: time
-    })
-
+    const file = req.file
+    const image = await uploadImage(file)
+    const { name } = req.body;
 
     const category = await prisma.category.create({
         data: {
             name: name,
-            image: url[0]
+            image: image
 
         },
     });
