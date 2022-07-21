@@ -1,13 +1,9 @@
 import e, { Express, Request, Response } from 'express';
 import admin from 'firebase-admin'
 
-
 const serviceAccount = require("../config/firebase-key.json");
 
-
 const BUCKET = "project-icm.appspot.com"
-
-
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
 
@@ -16,19 +12,10 @@ admin.initializeApp({
 
 const bucket = admin.storage().bucket()
 
-
-
-
 const uploadImage = async (uploadFile: any) => {
-
-
-
     const image = uploadFile
     const fileName = Date.now() + "." + image.originalname.split(".").pop()
-
     const file = bucket.file(fileName)
-    // bucket.upload('', {})
-
     const stream = file.createWriteStream({
         metadata: {
             contentType: image.mimetype,
@@ -42,12 +29,8 @@ const uploadImage = async (uploadFile: any) => {
         action: "read",
         expires: time
     })
+
     return url[0]
-
-
-
-
-
 }
 
 

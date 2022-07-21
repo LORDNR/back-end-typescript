@@ -5,15 +5,11 @@ import { userRouter } from './user.route'
 import authRouter from './auth.route'
 import multer from 'multer';
 
-import uploadImage from '../services/firebase';
-
-
 const Multer = multer({
     storage: multer.memoryStorage(),
     limits: {
         fieldSize: 1024 * 1024
     },
-
 })
 
 const routes = Router()

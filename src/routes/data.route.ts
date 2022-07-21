@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { getData, getDataByCgId, getDataByAreaId, getOneData, addData, updateData, deleteData } from '../controllers/data.controller'
 import { getOneDataSchema, addDataSchema, updateDataSchema, deleteDataSchema } from '../schema/data.schema'
+
 export const dataRoute = Router();
 
 dataRoute.get('/', getData)
