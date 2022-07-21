@@ -42,7 +42,7 @@ const uploadImage = async (uploadFile: any) => {
         action: "read",
         expires: time
     })
-
+    return url[0]
 
 
 
