@@ -12,7 +12,21 @@ const addDataSchema = checkSchema({
     name: {
         in: 'body',
         isString: true,
-        notEmpty: true
+
+    },
+    image: {
+        in: 'body',
+        isString: true,
+    },
+    cgId: {
+        in: 'body',
+        isInt: true,
+        toInt: true
+    },
+    areaId: {
+        in: 'body',
+        isInt: true,
+        toInt: true
     },
 
 })
@@ -22,17 +36,9 @@ const updateDataSchema = checkSchema({
         in: 'params',
         isInt: true,
         toInt: true
-    },
-    name: {
-        in: 'body',
-        isString: true,
-
 
     },
-    image: {
-        in: 'body',
-        isString: true,
-    }
+
 })
 
 const deleteDataSchema = checkSchema({

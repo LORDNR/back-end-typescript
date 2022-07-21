@@ -16,6 +16,10 @@ export const addCategorySchema = checkSchema({
 
         notEmpty: true
     },
+    image: {
+        in: 'body',
+        isString: true,
+    },
 })
 
 export const updateCategorySchema = checkSchema({
@@ -24,16 +28,6 @@ export const updateCategorySchema = checkSchema({
         isInt: true,
 
         toInt: true,
-    },
-    name: {
-        in: 'body',
-        isString: true,
-
-
-    },
-    image: {
-        in: 'body',
-        isString: true,
     }
 })
 
