@@ -1,12 +1,7 @@
 import Express, { Request, Response } from 'express'
 import { validationResult } from 'express-validator';
-
 import prisma from '../db/prisma.db'
-
 import uploadImage from '../services/firebase'
-
-
-
 
 const getCategories = async (req: Request, res: Response) => {
     const categories = await prisma.category.findMany();
@@ -21,7 +16,6 @@ const getCategories = async (req: Request, res: Response) => {
 }
 
 const getCategory = async (req: Request, res: Response) => {
-
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
@@ -31,10 +25,8 @@ const getCategory = async (req: Request, res: Response) => {
     const category = await prisma.category.findUnique({
         where: { id: id },
     });
+
     res.send(category);
-
-
-
 }
 
 const addCategory = async (req: Request, res: Response) => {
@@ -42,7 +34,6 @@ const addCategory = async (req: Request, res: Response) => {
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     }
-
 
     const file = req.file
     const image = await uploadImage(file)
@@ -55,6 +46,7 @@ const addCategory = async (req: Request, res: Response) => {
 
         },
     });
+
     res.status(201).send(category);
 }
 
@@ -66,14 +58,12 @@ const updateCategory = async (req: Request, res: Response) => {
 
     const file = req.file
     const image = await uploadImage(file)
-
     const { name } = req.body;
     const id = Number(req.params.id);
     const category = await prisma.category.update({
         where: { id: id },
         data: {
             name: name,
-
             image: image,
         },
     });
