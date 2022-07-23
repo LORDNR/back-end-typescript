@@ -8,6 +8,8 @@ const listAll = async (req: Request, res: Response) => {
     const users = await prisma.users.findMany({
         select: {
             username: true,
+            name: true,
+            phone: true,
             userlevel: true
         }
 
@@ -29,6 +31,8 @@ const getOneById = async (req: Request, res: Response) => {
         },
         select: {
             username: true,
+            name: true,
+            phone: true,
             userlevel: true
         }
 
@@ -43,10 +47,17 @@ const register = async (req: Request, res: Response) => {
         return res.status(400).json({ errors: errors.array() });
     }
 
+
+
+    const { name, username, phone, userlevel } = req.body
+
     const user = await prisma.users.create({
         data: {
-            username: req.body.username,
+            username: username,
             password: hashSync(req.body.password, 10),
+            name: name,
+            phone: phone,
+            userlevel: userlevel
         },
     });
     res.send({
@@ -55,6 +66,8 @@ const register = async (req: Request, res: Response) => {
         user: {
             id: user.id,
             username: user.username,
+            name: user.name,
+            phone: user.phone
 
         },
     });
