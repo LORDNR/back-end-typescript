@@ -1,9 +1,10 @@
 import { Router, Request, Response } from 'express'
-import { categoryRouter } from './category.route'
+import { categoryRoute } from './category.route'
 import { dataRoute } from './data.route'
-import { userRouter } from './user.route'
-import authRouter from './auth.route'
+import { userRoute } from './user.route'
+import authRoute from './auth.route'
 import multer from 'multer';
+import { areaRoute } from './area.route'
 
 const Multer = multer({
     storage: multer.memoryStorage(),
@@ -14,9 +15,10 @@ const Multer = multer({
 
 const routes = Router()
 
-routes.use('/category', Multer.single('image'), categoryRouter)
+routes.use('/category', Multer.single('image'), categoryRoute)
 routes.use('/data', Multer.single('image'), dataRoute)
-routes.use('/user', userRouter)
-routes.use('/auth', authRouter)
+routes.use('/area', areaRoute)
+routes.use('/user', userRoute)
+routes.use('/auth', authRoute)
 
 export default routes

@@ -1,11 +1,11 @@
 import { Router } from "express";
 import { listAll, getOneById, register } from '../controllers/user.controller'
 import { getOneByIdSchema, registerSchema } from '../schema/user.schema'
-export const userRouter = Router()
+export const userRoute = Router()
 
-userRouter.get('/', listAll)
-userRouter.get('/:id', getOneByIdSchema, getOneById)
-userRouter.post('/', registerSchema, register)
+userRoute.get('/', listAll)
+userRoute.get('/:id', getOneByIdSchema, getOneById)
+userRoute.post('/', registerSchema, register)
 // userRouter.post('/login', login)
 // userRouter.put('/:id', updateUser)
 
