@@ -15,6 +15,7 @@ DATABASE_URL="mysql://root:@localhost:3306/yourDB"
 #### open Terminal
 > pnpm install
 
+> pnpm prisma generate
 > pnpm prisma migrate dev --name init
 
 > pnpm dev
