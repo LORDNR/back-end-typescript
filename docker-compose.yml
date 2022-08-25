@@ -1,8 +1,10 @@
 version: '3.8'
 
 services:
+
   backend:
     container_name: project_icm
+    platform: linux/amd64
     depends_on:
       - db
     build: .
